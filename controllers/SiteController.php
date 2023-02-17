@@ -64,11 +64,17 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $allDishes = Dishes::allDishes();
-        $allIngredients = Ingredients::allIngredients();
+        $allIngredients = Ingredients::allIngredientsOn();
+        $enabledIngredients = Ingredients::ENABLED_INGREDIENTS;
+        $maxIngredients = Ingredients::MAX_INGREDIENTS;
+        $minIngredients = Ingredients::MIN_INGREDIENTS;
 
         return $this->render('index',[
             'allDishes' => $allDishes,
             'allIngredients' => $allIngredients,
+            'enabledIngredients' => $enabledIngredients,
+            'maxIngredients' => $maxIngredients,
+            'minIngredients' => $minIngredients,
         ]);
     }
 
@@ -138,12 +144,6 @@ class SiteController extends Controller
     {
         unset($_SESSION['ingredients']);
 
-        $allDishes = Dishes::allDishes();
-        $allIngredients = Ingredients::allIngredients();
-
-        return $this->render('index',[
-            'allDishes' => $allDishes,
-            'allIngredients' => $allIngredients,
-        ]);
+        return $this->redirect('index', 301);
     }
 }

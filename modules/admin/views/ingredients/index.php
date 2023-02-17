@@ -33,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete} {status}',
+                'template' => '{view} {update} {delete} {show-hide-ingredients}',
                 'buttons' => [
-                    'status' => function($model, $key, $index) {
+                    'show-hide-ingredients' => function($model, $key, $index) {
                         return Html::a('On/Off', Url::to([$model, 'id' => $key]));
                     }
                 ]
