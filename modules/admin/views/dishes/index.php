@@ -6,7 +6,7 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\admin\models\DishesSearch */
+/* @var $searchModel app\modules\admin\models\search\DishesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Названия блюд';

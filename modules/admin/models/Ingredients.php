@@ -20,8 +20,10 @@ class Ingredients extends \yii\db\ActiveRecord
     /**
      * To hide ingredients and dishes
      */
-    CONST ENABLED = 'On';
-    CONST DISABLED = 'Off';
+    CONST ENABLED_INGREDIENTS = 'On';
+    CONST DISABLED_INGREDIENTS = 'Off';
+    CONST MAX_INGREDIENTS = 6;
+    CONST MIN_INGREDIENTS = 2;
 
     /**
      * {@inheritdoc}
@@ -76,22 +78,22 @@ class Ingredients extends \yii\db\ActiveRecord
         return $this->hasMany(DishesIngredients::className(), ['ingredients_id' => 'id']);
     }
 
-    static function Hide($id) // Скрыть/Показать ингредиент
+    static function hideIngredients($id) // Скрыть/Показать ингредиент
     {
-        $Ingredient = Ingredients::findOne($id);
+        $Ingredient = self::findOne($id);
 
-        if($Ingredient->status == Ingredients::ENABLED) {
-            $Ingredient->status = Ingredients::DISABLED;
+        if($Ingredient->status == self::ENABLED_INGREDIENTS) {
+            $Ingredient->status = self::DISABLED_INGREDIENTS;
         }
-        elseif($Ingredient->status == Ingredients::DISABLED) {
-            $Ingredient->status = Ingredients::ENABLED;
+        elseif($Ingredient->status == self::DISABLED_INGREDIENTS) {
+            $Ingredient->status = self::ENABLED_INGREDIENTS;
         }
         $Ingredient->save();
     }
 
-    static function allIngredients() // Все ингредиенты
+    static function allIngredientsOn() // Все ингредиенты
     { 
-        $Ingredients = Ingredients::find()->all();
+        $Ingredients = self::find()->where(['status' => 'On'])->all();
         return $Ingredients;
     }
 }

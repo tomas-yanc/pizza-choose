@@ -132,9 +132,9 @@ class IngredientsController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionStatus($id) // Скрыть/Показать ингредиент
+    public function actionShowHideIngredients($id) // Скрыть/Показать ингредиент
     {
-        $ingredient = Ingredients::Hide($id);
+        Ingredients::hideIngredients($id);
 
         return $this->redirect(['index']);
     }

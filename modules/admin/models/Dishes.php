@@ -64,12 +64,13 @@ class Dishes extends \yii\db\ActiveRecord
      */
     public function getIngredients()
     {
-        return $this->hasMany(Ingredients::className(), ['id' => 'ingredients_id'])->viaTable('dishes_ingredients', ['dishes_id' => 'id']);
+        return $this->hasMany(Ingredients::className(),
+            ['id' => 'ingredients_id'])->viaTable('dishes_ingredients', ['dishes_id' => 'id']);
     }
 
     static function allDishes() // Все названия блюд
     {
-        $dishes = Dishes::find()->all();
+        $dishes = self::find()->all();
         return $dishes;
     }
 }
