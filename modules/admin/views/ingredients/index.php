@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Добавить ингредиент', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -33,10 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete} {show-hide-ingredients}',
+                'template' => '{view} {update} {delete} {index}',
                 'buttons' => [
-                    'show-hide-ingredients' => function($model, $key, $index) {
-                        return Html::a('On/Off', Url::to([$model, 'id' => $key]));
+                    'index' => function($model, $key, $index) {
+                        return Html::a(
+                                Html::img('/images/show-hide.png'),
+                                Url::to([$model, 'id' => $key]),
+                                ['title' => 'Статус']
+                        );
                     }
                 ]
             ],
