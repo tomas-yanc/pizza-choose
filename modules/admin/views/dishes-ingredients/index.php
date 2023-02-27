@@ -14,16 +14,50 @@ use app\modules\admin\models\Ingredients;
 $this->title = 'Блюда';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <div class="dishes-ingredients-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Блюда</th>
+            <th scope="col">Ингредиенты</th>
+            <th scope="col">Всего</th>
+            <th scope="col">Статус On</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+
+        if (!empty($allDishes)) {
+            foreach ($allDishes as $dish) { // Все названия блюд
+                $ingredientsOn = array();
+
+                echo "<tr><th>$dish->name</th><td>";
+
+                $ingredients = $dish->ingredients; // Все ингридиенты для конкретного блюда
+                $count = count($ingredients); // Кол-во ингредиентов для конкретного блюда
+
+                foreach ($ingredients as $ingredient) {
+                    if (!empty($enabledIngredients)) {
+                        if ($ingredient->status == $enabledIngredients) { // Если статус On
+
+                            $ingredientsOn[] = $ingredient;
+                            $countOn = count($ingredientsOn); // Кол-во ингредиентов для конкретного блюда со статусом On
+
+                            echo $ingredient->name . '<br>'; // Все ингридиенты для конкретного блюда
+                        }
+                    }
+                }
+                echo "</td><td>$count</td><td>$countOn</td></tr>";
+            }
+        }?>
+        </tbody>
+    </table>
 
     <p>
         <?= Html::a('Составить блюдо', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -41,33 +75,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-</div>
-
-<div>
-    <h2>Все блюда и их ингредиенты</h2>
-
-    <?php
-    foreach($allDishes as $dish) { // Все названия блюд
-        echo '<b>Пицца: </b>'.$dish->name.'<br><br>';
-
-        echo '<b>Ингредиенты в блюде: </b><br>';
-        $ingredients = $dish->ingredients; // Все ингридиенты для конкретного блюда
-
-        foreach($ingredients as $ingredient) {
-            $arrIngredients[] = $ingredient;
-            $count = count($arrIngredients); // Кол-во ингредиентов для конкретного блюда
-
-            if($ingredient->status == Ingredients::ENABLED) { // Если статус On
-                $arrIngredientsOn[] = $ingredient;
-                $countOn = count($arrIngredientsOn); // Кол-во ингредиентов для конкретного блюда со статусом On
-
-                echo $ingredient->name.'<br>'; // Все ингридиенты для конкретного блюда
-            }
-        }
-        echo '<b>Ингредиентов всего: </b>'.$count.'<br>';
-        $arrIngredients = array();
-
-        echo '<b>Ингредиентов со статусом On: </b>'.$countOn.'<br><hr>';
-        $arrIngredientsOn = array();
-    } ?>
 </div>

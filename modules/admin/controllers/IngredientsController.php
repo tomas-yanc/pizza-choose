@@ -7,6 +7,7 @@ use app\modules\admin\models\search\IngredientsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii;
 
 /**
  * IngredientsController implements the CRUD actions for Ingredients model.
@@ -36,8 +37,10 @@ class IngredientsController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($id = null)
     {
+        $id != null ? Ingredients::hideIngredients($id) : null;
+
         $searchModel = new IngredientsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -130,12 +133,5 @@ class IngredientsController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function actionShowHideIngredients($id) // Скрыть/Показать ингредиент
-    {
-        Ingredients::hideIngredients($id);
-
-        return $this->redirect(['index']);
     }
 }

@@ -63,15 +63,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (isset($_SESSION['ingredients']) && isset($_POST['drop-ingredients'])) {
+            unset($_SESSION['ingredients']);
+            unset($_POST['drop-ingredients']);
+        }
+
         $allDishes = Dishes::allDishes();
-        $allIngredients = Ingredients::allIngredientsOn();
+        $allIngredientsOn = Ingredients::allIngredientsOn();
         $enabledIngredients = Ingredients::ENABLED_INGREDIENTS;
         $maxIngredients = Ingredients::MAX_INGREDIENTS;
         $minIngredients = Ingredients::MIN_INGREDIENTS;
 
-        return $this->render('index',[
+        return $this->render('index', [
             'allDishes' => $allDishes,
-            'allIngredients' => $allIngredients,
+            'allIngredientsOn' => $allIngredientsOn,
             'enabledIngredients' => $enabledIngredients,
             'maxIngredients' => $maxIngredients,
             'minIngredients' => $minIngredients,
@@ -138,12 +143,5 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
-    }
-
-    public function actionSessIngredients() // Очистить $_SESSION['ingredients']
-    {
-        unset($_SESSION['ingredients']);
-
-        return $this->redirect('index', 301);
     }
 }

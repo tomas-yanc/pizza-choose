@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\modules\admin\models\Ingredients;
 use app\modules\admin\models\DishesIngredients;
 use app\modules\admin\models\search\DishesIngredientsSearch;
 use yii\web\Controller;
@@ -43,11 +44,13 @@ class DishesIngredientsController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         $allDishes = Dishes::allDishes();
+        $enabledIngredients = Ingredients::ENABLED_INGREDIENTS;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'allDishes' => $allDishes,
+            'enabledIngredients' => $enabledIngredients,
         ]);
     }
 
