@@ -15,7 +15,7 @@ $counter = null;
 ?>
 
 <div class="jumbotron text-center bg-transparent">
-    <h6 class="display-4">Пицца на выбор!</h6>
+    <h6 class="display-4">Пицца на выбор!!!</h6>
     <p>Выберите ингредиенты и получите блюдо</p>
 </div>
 
